@@ -9,7 +9,7 @@ const int PIN_7SEG_CLK = 2; // Grove 4-digit Display v1.0
 const int PIN_7SEG_DIO = 3; // Grove 4-digit Display v1.0
 const int PIN_BEATPOT = A2; // Grove Rotary Angle Sensor (p) v1.2
 const int PIN_BPMPOT = A0;  // Grove Rotary Angle Sensor (p) v1.2
-const int PIN_BUZZER = 11;  // Grove Buzzer v1.2
+const int PIN_BUZZER = 4;   // Grove Buzzer v1.2
 
 // Prefix "gl" means Global
 TM1637 glDisplay(PIN_7SEG_CLK, PIN_7SEG_DIO);
@@ -27,6 +27,9 @@ MillisTimer glClearDisplay = MillisTimer();
 
 void setup() {
   Serial.begin(9600);
+  glDisplay.init();
+  glDisplay.set(BRIGHT_TYPICAL);
+  glDisplay.displayNum(8888);
 
   glBPMCheck.setInterval(100); // Check BPM input every 100 ms
   glBPMCheck.expiredHandler(BPMCheck);
@@ -53,6 +56,9 @@ void setup() {
   glStopClick.expiredHandler(stopClick);
   glStopClick.setRepeats(1);
   glStopClick.stop();
+
+  delay(1000);
+  glDisplay.clearDisplay();
 }
 
 void loop() {
